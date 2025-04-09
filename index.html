@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚀 Docker Networking: Space Edition</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(ellipse at bottom, #0b1d2a 0%, #090a0f 100%);
+      color: #d0f0ff;
+      padding: 40px;
+    }
+    h1, h2 {
+      color: #00c3ff;
+      text-align: center;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    nav a {
+      color: #00ffff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #ffdd57;
+    }
+    .stars {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      z-index: -1;
+      animation: moveStars 200s linear infinite;
+    }
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: -10000px 5000px; }
+    }
+    section {
+      margin: 50px 0;
+    }
+    pre {
+      white-space: pre-wrap;
+      background-color: rgba(10, 15, 30, 0.8);
+      border-left: 5px solid #00c3ff;
+      padding: 30px;
+      border-radius: 12px;
+      line-height: 1.6;
+      font-size: 1rem;
+      color: #aafaff;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+    }
+    a {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #ffdd57;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <h1>🚀 DOCKER NETWORKING</h1>
+
+  <nav>
+    <a href="#define">Define</a>
+    <a href="#drivers">Network Drivers</a>
+    <a href="#container">Container Networking</a>
+    <a href="#ports">Published Ports</a>
+    <a href="#terminal">Terminal Commands</a>
+  </nav>
+
+  <section id="define">
+    <h2>🧠 DEFINE</h2>
+    <pre>
+QUICK FIRE QUESTIONS TO THE MASSES..
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+DEFINE:
+
+NETWORKING -
+Networking is the process of transporting and exchanging data between nodes over a shared
+medium in an information system.
+
+Protocol - An established set of rules that 
+determine how data is transmitted between different devices in the same network.
+
+Interface - A point of connection between a computer and a public or private network.
+
+port - A number assigned to uniquely identify a connection endpoint 
+       and to direct data to a specific service.
+    </pre>
+  </section>
+
+  <section id="drivers">
+    <h2>🌐 NETWORK DRIVERS</h2>
+    <pre>
+NETWORK DRIVERS.
+A network driver is a software that activates the actual transmission and 
+receipt of data over the network.
+
+*****************************************************************************************************************
+
+types of network drivers
+
+Bridge - This is the default network driver. 
+Usually used when applications need to run in standalone containers that need to communicate.
+a good example would be You're developing a web app with a frontend and backend, 
+running both in containers on your local machine.
+
+Host - The container shares the host's network stack. No isolation.
+
+This means that : No separate IP address for the container.
+
+The container uses the host’s IP address.
+
+Ports opened in the container are directly exposed on the host — no port mapping (-p) needed.
+
+Overlay - Used to connect containers 
+     running on different Docker hosts. Works in Docker Swarm mode.
+	 a good example is You’re building a distributed app where parts 
+	 of the system run on different machines (like a frontend on one server and a 
+	 DB on another), but they still need to talk to each other securely.
+
+IPvlan - IPvlan networks give users total control over IPv4 and IPv6 addressing. 
+ This Allows you to assign custom IP addresses to containers on a parent network interface.
+ 
+ A good example would be When you want containers to be part of your existing network, 
+    like assigning them IPs from your company LAN (for compliance or DHCP tracking).
+
+Macvlan - Macvlan networks allow you to assign a MAC address to a container, 
+making it appear as a physical device on your network LAN.
+Best for legacy applications that need to be directly connected to the physical network.
+
+None - Does not assign a network address to a container.  
+
+-- No network connection. Total isolation.
+used when one is trying to run a tool that shouldn’t talk to the internet or any other container.
+
+WHEN YOU INSTALL DOCKER THE DEFAULT NETWORK BRIDGES ARE :
+NONE, HOST AND BRIDGE
+
+Network plugins - You can install and use third-party network plugins with docker
+
+TO UNDERSTAND ALL THE ABOVE REALLY WELL PLEASE OPEN THIS LINK AND 
+PRACTICALLY DO THE CODE INNIT .. 
+
+https://www.cnblogs.com/Ethan2lee/p/7517391.html
+    </pre>
+  </section>
+
+  <section id="container">
+    <h2>📦 CONTAINER NETWORKING</h2>
+    <pre>
+Container Networking.
+
+A container "thinks" it's just on a normal network — 
+it doesn't know whether it's on a bridge, overlay, or host network. All it sees is an IP, 
+gateway, etc., unless it’s using the none network driver, in which case it has no network access.
+    </pre>
+  </section>
+
+  <section id="ports">
+    <h2>🔌 PUBLISHED PORTS</h2>
+    <pre>
+Published ports.
+
+By default, when you start a container with docker run, none of its ports are accessible from outside the container.
+If you want to allow external access — either from outside Docker or from containers on other networks — you need to use the --publish (or -p) option.
+
+For example: -p 8080:80 maps port 80 inside the container to port 8080 on the host machine
+
+docker network ls      --- show all the docker based networks in our computer.
+docker network create solar-system   ---- create a network
+docker network ls  ---- check if our chapatis are there.(bridge is the default driver)
+    </pre>
+  </section>
+
+  <section id="terminal">
+    <h2>💻 LET'S GO TO THE TERMINAL</h2>
+    <pre>
+LETS GO TO THE TERMINAL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+TO SPECIFY THE NETWORK DRIVER THAT YOU WANT TO USE 
+
+docker network create --driver  host  milky-way -- these will not run
+
+docker network create --driver  null milky-way   -- these will not run
+
+docker network create --driver bridge solar-system  -- (here you can add pools of 
+computers and call them nodes)
+docker network ls
+
+docker run --rm --it --name earth --network solar-system  busybox sh
+
+OPEN A NEW TERMINAL
+
+INSPECT IF THE CONTAINER IS RUNNING 
+docker ps
+docker inspect earth   --- check the network section show the network attached if it is solar-system
+
+docker run --rm --it --name mars --network solar-system  alpine sh
+
+INSPECT IF THE CONTAINER IS RUNNING 
+docker ps
+docker inspect mars   --- check the network section show the network attached if it is solar-system
+
+docker network  ls
+docker network inspect solar-system
+
+you will see the ip-address but no worries the name of the container will suffice 
+because of DNS.
+ ping earth         --- from mars
+ ping mars         --- from earth
+ 
+ try attach an existing network to another  container different from these ones 
+ 
+docker run --rm --it --name blackhole --network energy  alpine sh
+    </pre>
+  </section>
+</body>
+</html>
